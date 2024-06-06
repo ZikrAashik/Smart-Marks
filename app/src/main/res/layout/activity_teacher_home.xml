@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Teacher Home"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/colorPrimary" />
 
             <View
@@ -59,13 +59,14 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <TextView
+        android:id="@+id/tv_welcome_teacher"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_xlarge"
         android:layout_marginBottom="@dimen/spacing_mlarge"
         android:gravity="center"
         android:text="Welcome, Teacher"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/grey_60" />
 
     <androidx.cardview.widget.CardView
