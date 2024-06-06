@@ -82,7 +82,7 @@
             android:orientation="vertical"
             android:padding="@dimen/spacing_mlarge">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_view_report"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
                 android:textColor="@android:color/white"
                 android:layout_marginTop="@dimen/spacing_large" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_view_charts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

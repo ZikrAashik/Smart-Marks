@@ -44,6 +44,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/spacing_xxxlarge"
+        android:layout_marginTop="@dimen/spacing_middle"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -51,10 +52,10 @@
             android:id="@+id/et_search_student"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/spacing_xmlarge"
-            android:layout_margin="@dimen/spacing_middle"
+            android:layout_margin="@dimen/spacing_xsmall"
             android:background="@drawable/edit_text_round"
             android:gravity="center"
-            android:hint="Enter Student Index No"
+            android:hint="Student Index No"
             android:inputType="text"
             android:maxLines="1"
             android:singleLine="true"
@@ -77,14 +78,14 @@
 
     <TextView
         android:id="@+id/tv_student_details"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_middle"
+        android:layout_margin="@dimen/spacing_xsmall"
         android:background="@drawable/edit_text_round"
         android:gravity="center"
         android:inputType="textMultiLine"
         android:lines="3"
-        android:text="Name\nGrade\nClass"
+        android:text="Student Details"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/grey_60" />
 
@@ -301,7 +302,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_add_marks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -312,7 +313,7 @@
             android:background="@drawable/button_primary_shape"
             android:textColor="@android:color/white" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -321,7 +322,8 @@
             android:text="Clear"
             android:onClick="clearData"
             android:background="@drawable/button_secondary_shape"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/black" />
+
     </LinearLayout>
 
 </LinearLayout>

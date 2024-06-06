@@ -78,6 +78,8 @@ public class AddMarksActivity extends AppCompatActivity {
     }
 
     public void addMarks(View view) {
+        String indexNo = etSearchStudent.getText().toString().trim();
+
         String term = etTerm.getText().toString();
         String englishMarks = etEnglish.getText().toString();
         String mathsMarks = etMaths.getText().toString();
@@ -110,27 +112,29 @@ public class AddMarksActivity extends AppCompatActivity {
 
         // Get the current user's ID
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            String userId = currentUser.getUid();
+        assert currentUser != null;
+        String teacherId = currentUser.getUid();
+        marksMap.put("teacherId", teacherId);
 
-            // Get reference to the Firebase database
-            DatabaseReference studentMarksRef = FirebaseDatabase.getInstance().getReference().child("studentmarks").child(userId);
+        // Get reference to the Firebase database
+        DatabaseReference studentMarksRef = FirebaseDatabase.getInstance().getReference().child("StudentMarks").child(indexNo).child(term);
 
-            // Push the marks data to the Firebase database
-            studentMarksRef.push().setValue(marksMap)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(AddMarksActivity.this, "Marks added successfully", Toast.LENGTH_SHORT).show();
-                            // Clear the EditText fields after successfully adding marks
-                            clearFields();
-                        } else {
-                            Toast.makeText(AddMarksActivity.this, "Failed to add marks", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
+        // Push the marks data to the Firebase database
+        studentMarksRef.push().setValue(marksMap)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(AddMarksActivity.this, "Marks added successfully", Toast.LENGTH_SHORT).show();
+                        // Clear the EditText fields after successfully adding marks
+                        clearFields();
+                    } else {
+                        Toast.makeText(AddMarksActivity.this, "Failed to add marks", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void clearFields() {
+        etSearchStudent.getText().clear();
+        tvStudentDetails.setText("Student Details");
         etTerm.getText().clear();
         etEnglish.getText().clear();
         etMaths.getText().clear();
@@ -143,8 +147,6 @@ public class AddMarksActivity extends AppCompatActivity {
     }
 
     public void clearData(View view) {
-        etSearchStudent.getText().clear();
-        tvStudentDetails.setText("Name\nGrade\nClass");
         clearFields();
     }
 }
