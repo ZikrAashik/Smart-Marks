@@ -10,6 +10,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,9 +21,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeacherReportViewActivity extends AppCompatActivity {
+public class StudentReportViewActivity extends AppCompatActivity {
 
-    private EditText etSearchStudent;
     private TextView tvStudentDetails;
     private TextView tvEnglish, tvMaths, tvReligion, tvHistory, tvMusic, tvGeography, tvICT, tvScience, tvTotal;
     private Spinner spinnerTerm;
@@ -28,12 +30,14 @@ public class TeacherReportViewActivity extends AppCompatActivity {
     private List<String> termsList;
     private String indexNo;
 
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teacher_report_view);
+        setContentView(R.layout.activity_student_report_view);
 
-        etSearchStudent = findViewById(R.id.et_search_student);
         tvStudentDetails = findViewById(R.id.tv_student_details);
         spinnerTerm = findViewById(R.id.spinner_term);
 
@@ -47,7 +51,38 @@ public class TeacherReportViewActivity extends AppCompatActivity {
         tvScience = findViewById(R.id.tv_science);
         tvTotal = findViewById(R.id.tv_total);
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+
+            // Retrieve user's first name and last name from Firebase Realtime Database
+            mDatabase.child("Users").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        String name = dataSnapshot.child("firstname").getValue(String.class) + " " + dataSnapshot.child("lastname").getValue(String.class);
+                        String grade = dataSnapshot.child("grade").getValue(String.class);
+                        String className = dataSnapshot.child("className").getValue(String.class);
+
+                        String studentDetails = "Name: " + name + "\nGrade: " + grade + "\nClass: " + className;
+                        tvStudentDetails.setText(studentDetails);
+
+                        indexNo = dataSnapshot.child("indexNo").getValue(String.class);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Handle errors
+                }
+            });
+        }
+
         termsList = new ArrayList<>();
+        setStudentTerms();
         termAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, termsList);
         termAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTerm.setAdapter(termAdapter);
@@ -65,34 +100,11 @@ public class TeacherReportViewActivity extends AppCompatActivity {
         });
     }
 
-    public void searchStudent(View view) {
-        indexNo = etSearchStudent.getText().toString().trim();
+    private void setStudentTerms() {
+
         if (indexNo.isEmpty()) {
-            Toast.makeText(this, "Please enter student index number", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        // Reference to the Users node to get user ID using indexNo
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users");
-
-        userRef.orderByChild("indexNo").equalTo(indexNo).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    String name = dataSnapshot.child("firstname").getValue(String.class) + " " + dataSnapshot.child("lastname").getValue(String.class);
-                    String grade = dataSnapshot.child("grade").getValue(String.class);
-                    String className = dataSnapshot.child("className").getValue(String.class);
-
-                    String studentDetails = "Name: " + name + "\nGrade: " + grade + "\nClass: " + className;
-                    tvStudentDetails.setText(studentDetails);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Handle errors
-            }
-        });
 
         DatabaseReference studentMarksRef = FirebaseDatabase.getInstance().getReference()
                 .child("StudentMarks").child(indexNo);
@@ -110,13 +122,13 @@ public class TeacherReportViewActivity extends AppCompatActivity {
                         spinnerTerm.setSelection(0);
                     }
                 } else {
-                    Toast.makeText(TeacherReportViewActivity.this, "No marks found for the provided index number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StudentReportViewActivity.this, "No marks found for your index number", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(TeacherReportViewActivity.this, "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(StudentReportViewActivity.this, "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -152,19 +164,18 @@ public class TeacherReportViewActivity extends AppCompatActivity {
                     }
                     tvTotal.setText(String.valueOf(total));
                 } else {
-                    Toast.makeText(TeacherReportViewActivity.this, "No marks found for the selected term", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StudentReportViewActivity.this, "No marks found for the selected term", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(TeacherReportViewActivity.this, "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(StudentReportViewActivity.this, "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    public void clearData(View view) {
-        etSearchStudent.getText().clear();
+    public void backHome(View view) {
         tvStudentDetails.setText("Student Details");
         termsList.clear();
 
