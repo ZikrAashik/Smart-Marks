@@ -100,7 +100,6 @@ public class AddMarksActivity extends AppCompatActivity {
 
         // Create a HashMap to store the marks
         HashMap<String, Object> marksMap = new HashMap<>();
-        marksMap.put("term", term);
         marksMap.put("english", englishMarks);
         marksMap.put("maths", mathsMarks);
         marksMap.put("religion", religionMarks);
@@ -119,12 +118,10 @@ public class AddMarksActivity extends AppCompatActivity {
         // Get reference to the Firebase database
         DatabaseReference studentMarksRef = FirebaseDatabase.getInstance().getReference().child("StudentMarks").child(indexNo).child(term);
 
-        // Push the marks data to the Firebase database
-        studentMarksRef.push().setValue(marksMap)
+        studentMarksRef.updateChildren(marksMap)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(AddMarksActivity.this, "Marks added successfully", Toast.LENGTH_SHORT).show();
-                        // Clear the EditText fields after successfully adding marks
                         clearFields();
                     } else {
                         Toast.makeText(AddMarksActivity.this, "Failed to add marks", Toast.LENGTH_SHORT).show();

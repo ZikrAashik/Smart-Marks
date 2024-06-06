@@ -81,10 +81,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_xsmall"
-        android:background="@drawable/edit_text_round"
         android:gravity="center"
         android:inputType="textMultiLine"
         android:lines="3"
+        android:textSize="16sp"
         android:text="Student Details"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/grey_60" />
@@ -303,17 +303,6 @@
         android:gravity="center_horizontal"
         android:orientation="horizontal">
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_add_marks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing_middle"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:text="Add Marks"
-            android:onClick="addMarks"
-            android:background="@drawable/button_primary_shape"
-            android:textColor="@android:color/white" />
-
-        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -323,7 +312,16 @@
             android:onClick="clearData"
             android:background="@drawable/button_secondary_shape"
             android:textColor="@android:color/black" />
-
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_add_marks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_middle"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:text="Add Marks"
+            android:onClick="addMarks"
+            android:background="@drawable/button_primary_shape"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </LinearLayout>
