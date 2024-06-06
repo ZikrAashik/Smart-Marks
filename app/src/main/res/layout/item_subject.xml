@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_margin="@dimen/spacing_middle">
+
+    <EditText
+        android:id="@+id/tv_subject_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:inputType="text"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/grey_60"
+        android:hint="Subject Name" />
+
+    <EditText
+        android:id="@+id/et_subject_marks"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="Marks" />
+
+    <ImageView
+        android:id="@+id/btn_remove_subject"
+        android:layout_width="@dimen/spacing_xxxlarge"
+        android:layout_height="@dimen/spacing_xxxlarge"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="@dimen/spacing_large"
+        app:srcCompat="@drawable/ic_clear"
+        app:tint="@color/colorPrimary"
+        android:focusable="true" />
+
+</LinearLayout>

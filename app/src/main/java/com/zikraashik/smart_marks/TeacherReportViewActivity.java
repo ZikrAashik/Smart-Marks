@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,8 +25,8 @@ import java.util.List;
 public class TeacherReportViewActivity extends AppCompatActivity {
 
     private EditText etSearchStudent;
-    private TextView tvStudentDetails;
-    private TextView tvEnglish, tvMaths, tvReligion, tvHistory, tvMusic, tvGeography, tvICT, tvScience, tvTotal;
+    private TextView tvStudentDetails, tvTotal;
+    private LinearLayout llSubjectMarksContainer;
     private Spinner spinnerTerm;
     private ArrayAdapter<String> termAdapter;
     private List<String> termsList;
@@ -38,16 +40,8 @@ public class TeacherReportViewActivity extends AppCompatActivity {
         etSearchStudent = findViewById(R.id.et_search_student);
         tvStudentDetails = findViewById(R.id.tv_student_details);
         spinnerTerm = findViewById(R.id.spinner_term);
-
-        tvEnglish = findViewById(R.id.tv_english);
-        tvMaths = findViewById(R.id.tv_maths);
-        tvReligion = findViewById(R.id.tv_religion);
-        tvHistory = findViewById(R.id.tv_history);
-        tvMusic = findViewById(R.id.tv_music);
-        tvGeography = findViewById(R.id.tv_geography);
-        tvICT = findViewById(R.id.tv_ict);
-        tvScience = findViewById(R.id.tv_science);
         tvTotal = findViewById(R.id.tv_total);
+        llSubjectMarksContainer = findViewById(R.id.ll_subject_marks_container);
 
         termsList = new ArrayList<>();
         termAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, termsList);
@@ -137,27 +131,41 @@ public class TeacherReportViewActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    tvEnglish.setText(dataSnapshot.child("english").getValue(String.class));
-                    tvMaths.setText(dataSnapshot.child("maths").getValue(String.class));
-                    tvReligion.setText(dataSnapshot.child("religion").getValue(String.class));
-                    tvHistory.setText(dataSnapshot.child("history").getValue(String.class));
-                    tvMusic.setText(dataSnapshot.child("music").getValue(String.class));
-                    tvGeography.setText(dataSnapshot.child("geography").getValue(String.class));
-                    tvICT.setText(dataSnapshot.child("ict").getValue(String.class));
-                    tvScience.setText(dataSnapshot.child("science").getValue(String.class));
 
-                    // Calculate total
-                    int total = 0;
-                    for (DataSnapshot markSnapshot : dataSnapshot.getChildren()) {
-                        String markStr = markSnapshot.getValue(String.class);
-                        if (markStr != null) {
+                    llSubjectMarksContainer.removeAllViews();
+                    float total = 0;
+
+                    for (DataSnapshot subjectSnapshot : dataSnapshot.getChildren()) {
+                        String subjectName = subjectSnapshot.getKey();
+
+                        if(subjectName.equals("teacherId"))
+                            continue;
+
+                        String marks = subjectSnapshot.getValue(String.class);
+
+                        View subjectLayout = LayoutInflater.from(TeacherReportViewActivity.this)
+                                .inflate(R.layout.item_view_subject, llSubjectMarksContainer, false);
+
+                        // Set subject name
+                        TextView tvSubjectName = subjectLayout.findViewById(R.id.tv_subject_name);
+                        tvSubjectName.setText(subjectName);
+
+                        // Set marks
+                        TextView tvMarks = subjectLayout.findViewById(R.id.tv_subject_marks);
+                        tvMarks.setText(marks);
+
+                        // Add subject layout to the container
+                        llSubjectMarksContainer.addView(subjectLayout);
+
+                        if (marks != null) {
                             try {
-                                total += Integer.parseInt(markStr);
+                                total += Float.parseFloat(marks);
                             } catch (NumberFormatException e) {
                                 // Ignore if not a number
                             }
                         }
                     }
+
                     tvTotal.setText(String.valueOf(total));
                 } else {
                     Toast.makeText(TeacherReportViewActivity.this, "No marks found for the selected term", Toast.LENGTH_SHORT).show();
@@ -176,19 +184,13 @@ public class TeacherReportViewActivity extends AppCompatActivity {
         tvStudentDetails.setText("Student Details");
         termsList.clear();
 
-        tvEnglish.setText("Marks");
-        tvMaths.setText("Marks");
-        tvReligion.setText("Marks");
-        tvHistory.setText("Marks");
-        tvMusic.setText("Marks");
-        tvGeography.setText("Marks");
-        tvICT.setText("Marks");
-        tvScience.setText("Marks");
+        llSubjectMarksContainer.removeAllViews();
+
         tvTotal.setText("Marks");
     }
 
     public void backHome(View view) {
-        startActivity(new Intent(TeacherReportViewActivity.this, StudentHomeActivity.class));
+        startActivity(new Intent(TeacherReportViewActivity.this, TeacherHomeActivity.class));
         finish();
     }
 }

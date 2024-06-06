@@ -2,6 +2,8 @@ package com.zikraashik.smart_marks;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,14 +19,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.zikraashik.smart_marks.adapter.SubjectsAdapter;
+import com.zikraashik.smart_marks.model.Subject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AddMarksActivity extends AppCompatActivity {
 
-    private EditText etSearchStudent;
+    private EditText etSearchStudent, etTerm;
     private TextView tvStudentDetails;
-    private EditText etTerm, etEnglish, etMaths, etReligion, etHistory, etMusic, etGeography, etICT, etScience;
+    private RecyclerView rvSubjects;
+    private SubjectsAdapter subjectAdapter;
+    private List<Subject> subjectList;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +43,17 @@ public class AddMarksActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_marks);
 
         etSearchStudent = findViewById(R.id.et_search_student);
+        etTerm = findViewById(R.id.et_term);
         tvStudentDetails = findViewById(R.id.tv_student_details);
+        rvSubjects = findViewById(R.id.rv_subjects);
+
+        subjectList = new ArrayList<>();
+        subjectAdapter = new SubjectsAdapter(this, subjectList);
+        rvSubjects.setLayoutManager(new LinearLayoutManager(this));
+        rvSubjects.setAdapter(subjectAdapter);
 
         etTerm = findViewById(R.id.et_term);
-        etEnglish = findViewById(R.id.et_english);
-        etMaths = findViewById(R.id.et_maths);
-        etReligion = findViewById(R.id.et_religion);
-        etHistory = findViewById(R.id.et_history);
-        etMusic = findViewById(R.id.et_music);
-        etGeography = findViewById(R.id.et_geography);
-        etICT = findViewById(R.id.et_ict);
-        etScience = findViewById(R.id.et_science);
+
     }
 
     public void searchStudent(View view) {
@@ -78,48 +89,50 @@ public class AddMarksActivity extends AppCompatActivity {
         });
     }
 
+    public void addSubject(View view) {
+        subjectList.add(new Subject("", "0"));
+        subjectAdapter.notifyItemInserted(subjectList.size() - 1);
+    }
+
     public void addMarks(View view) {
-        String indexNo = etSearchStudent.getText().toString().trim();
-
-        String term = etTerm.getText().toString();
-        String englishMarks = etEnglish.getText().toString();
-        String mathsMarks = etMaths.getText().toString();
-        String religionMarks = etReligion.getText().toString();
-        String historyMarks = etHistory.getText().toString();
-        String musicMarks = etMusic.getText().toString();
-        String geographyMarks = etGeography.getText().toString();
-        String ICTMarks = etICT.getText().toString();
-        String scienceMarks = etScience.getText().toString();
-
-        // Check if any field is empty
-        if (term.isEmpty() || englishMarks.isEmpty() || mathsMarks.isEmpty() || religionMarks.isEmpty() ||
-                historyMarks.isEmpty() || musicMarks.isEmpty() || geographyMarks.isEmpty() ||
-                ICTMarks.isEmpty() || scienceMarks.isEmpty()) {
-            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+        String term = etTerm.getText().toString().trim();
+        if (term.isEmpty()) {
+            Toast.makeText(this, "Please enter term name", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Create a HashMap to store the marks
-        HashMap<String, Object> marksMap = new HashMap<>();
-        marksMap.put("english", englishMarks);
-        marksMap.put("maths", mathsMarks);
-        marksMap.put("religion", religionMarks);
-        marksMap.put("history", historyMarks);
-        marksMap.put("music", musicMarks);
-        marksMap.put("geography", geographyMarks);
-        marksMap.put("ict", ICTMarks);
-        marksMap.put("science", scienceMarks);
+        String indexNo = etSearchStudent.getText().toString().trim();
+        if (indexNo.isEmpty()) {
+            Toast.makeText(this, "Please enter student index number", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Map<String, Object> marksData = new HashMap<>();
+        for (int i = 0; i < subjectList.size(); i++) {
+            Subject subject = subjectList.get(i);
+            View viewHolder = rvSubjects.getChildAt(i);
+            EditText etSubjectName = viewHolder.findViewById(R.id.tv_subject_name);
+            EditText etSubjectMarks = viewHolder.findViewById(R.id.et_subject_marks);
+
+            String subjectName = etSubjectName.getText().toString().trim();
+            String subjectMarks = etSubjectMarks.getText().toString().trim();
+
+            subject.setName(subjectName);
+            subject.setMarks(subjectMarks);
+
+            marksData.put(subjectName, subjectMarks);
+        }
 
         // Get the current user's ID
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         assert currentUser != null;
         String teacherId = currentUser.getUid();
-        marksMap.put("teacherId", teacherId);
+        marksData.put("teacherId", teacherId);
 
         // Get reference to the Firebase database
         DatabaseReference studentMarksRef = FirebaseDatabase.getInstance().getReference().child("StudentMarks").child(indexNo).child(term);
 
-        studentMarksRef.updateChildren(marksMap)
+        studentMarksRef.updateChildren(marksData)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(AddMarksActivity.this, "Marks added successfully", Toast.LENGTH_SHORT).show();
@@ -134,14 +147,8 @@ public class AddMarksActivity extends AppCompatActivity {
         etSearchStudent.getText().clear();
         tvStudentDetails.setText("Student Details");
         etTerm.getText().clear();
-        etEnglish.getText().clear();
-        etMaths.getText().clear();
-        etReligion.getText().clear();
-        etHistory.getText().clear();
-        etMusic.getText().clear();
-        etGeography.getText().clear();
-        etICT.getText().clear();
-        etScience.getText().clear();
+        subjectList.clear();
+        subjectAdapter.notifyDataSetChanged();
     }
 
     public void clearData(View view) {
@@ -149,7 +156,7 @@ public class AddMarksActivity extends AppCompatActivity {
     }
 
     public void backHome(View view) {
-        startActivity(new Intent(AddMarksActivity.this, StudentHomeActivity.class));
+        startActivity(new Intent(AddMarksActivity.this, TeacherHomeActivity.class));
         finish();
     }
 }
