@@ -87,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="View Report Card"
-                android:background="@drawable/button_continue_shape"
+                android:background="@drawable/button_primary_shape"
                 android:textColor="@android:color/white"
                 android:layout_marginTop="@dimen/spacing_large" />
 
@@ -96,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="View Charts"
-                android:background="@drawable/button_continue_shape"
+                android:background="@drawable/button_primary_shape"
                 android:textColor="@android:color/white"
                 android:layout_marginTop="@dimen/spacing_large" />
 

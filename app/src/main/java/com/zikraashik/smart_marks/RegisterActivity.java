@@ -27,7 +27,7 @@ import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText fNameEditText,lNameEditText, emailEditText, passwordEditText, retypePasswordEditText;
+    private EditText fNameEditText,lNameEditText, emailEditText, passwordEditText, retypePasswordEditText, indexNoEditText;
     private Spinner gradeSpinner, classSpinner;
     private RadioGroup rgRole;
     private ViewStub viewStubStudent;
@@ -84,6 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
                         viewStubStudent.inflate();
                         gradeSpinner = findViewById(R.id.spinner_grade);
                         classSpinner = findViewById(R.id.spinner_class);
+                        indexNoEditText = findViewById(R.id.ed_index_no);
 
                         // Populate the spinners
                         ArrayAdapter<CharSequence> gradeAdapter = ArrayAdapter.createFromResource(RegisterActivity.this,
@@ -134,14 +135,16 @@ public class RegisterActivity extends AppCompatActivity {
         if (userType.equals("student")) {
             String grade = gradeSpinner.getSelectedItem().toString();
             String className = classSpinner.getSelectedItem().toString();
+            String indexNo = indexNoEditText.getText().toString();
 
-            if (grade.isEmpty() || className.isEmpty()) {
+            if (grade.isEmpty() || className.isEmpty() || indexNo.isEmpty()) {
                 Toast.makeText(RegisterActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             userdataMap.put("grade", grade);
             userdataMap.put("className", className);
+            userdataMap.put("indexNo", indexNo);
         }
 
         progressBar.setVisibility(View.VISIBLE);

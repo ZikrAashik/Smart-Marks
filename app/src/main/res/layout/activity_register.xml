@@ -223,7 +223,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/button_continue_shape"
+                    android:background="@drawable/button_primary_shape"
                     android:onClick="register"
                     android:text="REGISTER"
                     android:textColor="@android:color/white" />

@@ -31,7 +31,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
         btnViewReports = findViewById(R.id.btn_view_reports);
         btnViewCharts = findViewById(R.id.btn_view_charts);
 
-        //btnAddMarks.setOnClickListener(v -> startActivity(new Intent(TeacherHomeActivity.this, AddMarksActivity.class)));
+        btnAddMarks.setOnClickListener(v -> startActivity(new Intent(TeacherHomeActivity.this, AddMarksActivity.class)));
         //btnViewReports.setOnClickListener(v -> startActivity(new Intent(TeacherHomeActivity.this, ViewReportsActivity.class)));
         //btnViewCharts.setOnClickListener(v -> startActivity(new Intent(TeacherHomeActivity.this, ViewChartsActivity.class)));
 
