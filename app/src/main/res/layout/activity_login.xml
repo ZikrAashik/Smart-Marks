@@ -49,9 +49,11 @@
                 android:layout_height="@dimen/spacing_xxxlarge"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
+                android:onClick="closeApp"
                 android:padding="@dimen/spacing_large"
                 app:srcCompat="@drawable/ic_clear"
-                app:tint="@color/colorPrimary" />
+                app:tint="@color/colorPrimary"
+                android:focusable="true" />
 
         </LinearLayout>
 
@@ -125,6 +127,16 @@
                     android:singleLine="true"
                     android:textColor="@color/grey_60" />
 
+                <ImageButton
+                    android:id="@+id/show_pass"
+                    android:layout_width="@dimen/spacing_xmlarge"
+                    android:layout_height="@dimen/spacing_xmlarge"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:src="@drawable/toggle_password_view"
+                    app:tint="@color/grey_40" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -139,6 +151,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_continue_shape"
                     android:text="LOGIN"
+                    android:onClick="login"
                     android:textColor="@android:color/white" />
 
                 <ProgressBar
@@ -200,11 +213,13 @@
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
+                    android:onClick="openRegisterActivity"
                     android:padding="@dimen/spacing_medium"
                     android:text="Register"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:focusable="true" />
 
             </LinearLayout>
 

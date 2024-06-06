@@ -50,9 +50,11 @@
                 android:layout_height="@dimen/spacing_xxxlarge"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
+                android:onClick="openLoginActivity"
                 android:padding="@dimen/spacing_large"
                 app:tint="@color/colorPrimary"
-                app:srcCompat="@drawable/ic_clear" />
+                app:srcCompat="@drawable/ic_clear"
+                android:focusable="true" />
 
         </LinearLayout>
 
@@ -139,6 +141,16 @@
                     android:textColor="@color/grey_60"
                     android:textColorHint="@color/grey_20" />
 
+                <ImageButton
+                    android:id="@+id/show_pass"
+                    android:layout_width="@dimen/spacing_xmlarge"
+                    android:layout_height="@dimen/spacing_xmlarge"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:src="@drawable/toggle_password_view"
+                    app:tint="@color/grey_40" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -157,6 +169,16 @@
                     android:singleLine="true"
                     android:textColor="@color/grey_60"
                     android:textColorHint="@color/grey_20" />
+
+                <ImageButton
+                    android:id="@+id/show_re_pass"
+                    android:layout_width="@dimen/spacing_xmlarge"
+                    android:layout_height="@dimen/spacing_xmlarge"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:src="@drawable/toggle_password_view"
+                    app:tint="@color/grey_40" />
 
             </RelativeLayout>
 
@@ -182,6 +204,14 @@
                     android:text="Teacher"
                     android:textColor="@color/grey_60" />
             </RadioGroup>
+
+            <ViewStub
+                android:id="@+id/view_stub_student"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:inflatedId="@+id/inflated_student"
+                android:layout="@layout/view_stub_student" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

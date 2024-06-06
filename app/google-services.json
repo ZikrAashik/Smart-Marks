@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "639152974431",
+    "project_id": "smart-marks",
+    "storage_bucket": "smart-marks.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639152974431:android:9ea7968b380e06924a89ea",
+        "android_client_info": {
+          "package_name": "com.zikraashik.smart_marks"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANkqBpc8HOPen2wBNOZ_jdnfnGQdXLjOM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
