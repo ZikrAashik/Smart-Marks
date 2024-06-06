@@ -49,7 +49,7 @@ public class StudentHomeActivity extends AppCompatActivity {
                         String lastName = dataSnapshot.child("lastname").getValue(String.class);
 
                         // Update the welcome message with user's first name and last name
-                        TextView welcomeTextView = findViewById(R.id.tv_welcome_teacher);
+                        TextView welcomeTextView = findViewById(R.id.tv_welcome_student);
                         welcomeTextView.setText("Welcome, " + firstName + " " + lastName);
                     }
                 }
