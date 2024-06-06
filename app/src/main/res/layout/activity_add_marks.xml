@@ -313,6 +313,16 @@
             android:background="@drawable/button_secondary_shape"
             android:textColor="@android:color/black" />
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_middle"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:text="Back"
+            android:onClick="addMarks"
+            android:background="@drawable/button_primary_shape"
+            android:textColor="@android:color/white" />
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_add_marks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
