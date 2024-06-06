@@ -54,6 +54,8 @@ public class StudentReportViewActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
+        termsList = new ArrayList<>();
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String userId = currentUser.getUid();
@@ -71,6 +73,8 @@ public class StudentReportViewActivity extends AppCompatActivity {
                         tvStudentDetails.setText(studentDetails);
 
                         indexNo = dataSnapshot.child("indexNo").getValue(String.class);
+
+                        setStudentTerms();
                     }
                 }
 
@@ -81,8 +85,8 @@ public class StudentReportViewActivity extends AppCompatActivity {
             });
         }
 
-        termsList = new ArrayList<>();
-        setStudentTerms();
+
+
         termAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, termsList);
         termAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTerm.setAdapter(termAdapter);
