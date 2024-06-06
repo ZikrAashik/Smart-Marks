@@ -2,6 +2,8 @@ package com.zikraashik.smart_marks;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -180,17 +182,7 @@ public class StudentReportViewActivity extends AppCompatActivity {
     }
 
     public void backHome(View view) {
-        tvStudentDetails.setText("Student Details");
-        termsList.clear();
-
-        tvEnglish.setText("Marks");
-        tvMaths.setText("Marks");
-        tvReligion.setText("Marks");
-        tvHistory.setText("Marks");
-        tvMusic.setText("Marks");
-        tvGeography.setText("Marks");
-        tvICT.setText("Marks");
-        tvScience.setText("Marks");
-        tvTotal.setText("Marks");
+        startActivity(new Intent(StudentReportViewActivity.this, StudentHomeActivity.class));
+        finish();
     }
 }

@@ -85,6 +85,8 @@ public class TeacherReportViewActivity extends AppCompatActivity {
 
                     String studentDetails = "Name: " + name + "\nGrade: " + grade + "\nClass: " + className;
                     tvStudentDetails.setText(studentDetails);
+
+                    loadStudentData();
                 }
             }
 
@@ -93,7 +95,9 @@ public class TeacherReportViewActivity extends AppCompatActivity {
                 // Handle errors
             }
         });
+    }
 
+    private void loadStudentData() {
         DatabaseReference studentMarksRef = FirebaseDatabase.getInstance().getReference()
                 .child("StudentMarks").child(indexNo);
 
