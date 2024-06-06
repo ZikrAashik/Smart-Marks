@@ -3,6 +3,7 @@ package com.zikraashik.smart_marks;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -145,5 +146,10 @@ public class AddMarksActivity extends AppCompatActivity {
 
     public void clearData(View view) {
         clearFields();
+    }
+
+    public void backHome(View view) {
+        startActivity(new Intent(AddMarksActivity.this, StudentHomeActivity.class));
+        finish();
     }
 }

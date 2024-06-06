@@ -2,6 +2,8 @@ package com.zikraashik.smart_marks;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -79,9 +81,11 @@ public class TeacherReportViewActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    String name = dataSnapshot.child("firstname").getValue(String.class) + " " + dataSnapshot.child("lastname").getValue(String.class);
-                    String grade = dataSnapshot.child("grade").getValue(String.class);
-                    String className = dataSnapshot.child("className").getValue(String.class);
+                    DataSnapshot userSnapshot = dataSnapshot.getChildren().iterator().next();
+
+                    String name = userSnapshot.child("firstname").getValue(String.class) + " " + userSnapshot.child("lastname").getValue(String.class);
+                    String grade = userSnapshot.child("grade").getValue(String.class);
+                    String className = userSnapshot.child("className").getValue(String.class);
 
                     String studentDetails = "Name: " + name + "\nGrade: " + grade + "\nClass: " + className;
                     tvStudentDetails.setText(studentDetails);
@@ -181,5 +185,10 @@ public class TeacherReportViewActivity extends AppCompatActivity {
         tvICT.setText("Marks");
         tvScience.setText("Marks");
         tvTotal.setText("Marks");
+    }
+
+    public void backHome(View view) {
+        startActivity(new Intent(TeacherReportViewActivity.this, StudentHomeActivity.class));
+        finish();
     }
 }

@@ -344,6 +344,12 @@
 
     </androidx.cardview.widget.CardView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_clear"
         android:layout_width="wrap_content"
@@ -355,4 +361,15 @@
         android:text="Clear"
         android:textColor="@android:color/black" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_middle"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:text="Back"
+        android:onClick="backHome"
+        android:background="@drawable/button_secondary_shape"
+        android:textColor="@android:color/black" />
+    </LinearLayout>
 </LinearLayout>
