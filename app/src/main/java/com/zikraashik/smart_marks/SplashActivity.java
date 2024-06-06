@@ -60,8 +60,8 @@ public class SplashActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if (currentUser != null) {
-            // User is already logged in, redirect to MainActivity
-            startActivityMain(currentUser.getUid());
+            // User is already logged in, redirect to Home
+            loginUser(currentUser.getUid());
         } else {
             // User is not logged in, redirect to LoginActivity
             startActivityLogin();
@@ -74,32 +74,29 @@ public class SplashActivity extends AppCompatActivity {
         finish();
     }
 
-    private void startActivityMain(String userId) {
+    private void loginUser(String userId) {
+        final DatabaseReference RootRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
 
-        DatabaseReference RootRef = FirebaseDatabase.getInstance().getReference();
+        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String userType = snapshot.child("userType").getValue(String.class);
+                    if ("student".equals(userType)) {
+                        startActivity(new Intent(SplashActivity.this, StudentHomeActivity.class));
+                    } else if ("teacher".equals(userType)) {
+                        startActivity(new Intent(SplashActivity.this, TeacherHomeActivity.class));
+                    }
+                    finish();
+                } else {
+                    Toast.makeText(SplashActivity.this, "User data not found", Toast.LENGTH_SHORT).show();
+                }
+            }
 
-//        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                Intent i = new Intent(SplashActivity.this, HomeActivity.class);
-//
-//                if (dataSnapshot.child("Admins").child(userId).exists()) {
-//                    i.putExtra("Admin", true);
-//                    startActivity(i);
-//                    finish();
-//                } else if (dataSnapshot.child("Users").child(userId).exists()) {
-//                    i.putExtra("Admin", false);
-//                    startActivity(i);
-//                    finish();
-//                } else {
-//                    Toast.makeText(SplashActivity.this, "There are no accounts with this email", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(SplashActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         Toast.makeText(this, "Authentication success.", Toast.LENGTH_SHORT).show();
 
-                        loginType(userId);
+                        loginUser(userId);
                     } else {
                         // If sign in fails, display a message to the user.
                         Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show();
@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void loginType(String userId) {
+    private void loginUser(String userId) {
         final DatabaseReference RootRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
 
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -96,13 +96,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     String userType = snapshot.child("userType").getValue(String.class);
-
                     if ("student".equals(userType)) {
-                        Toast.makeText(LoginActivity.this, "Student", Toast.LENGTH_SHORT).show();
-                        //startActivity(new Intent(LoginActivity.this, StudentHomeActivity.class));
+                        startActivity(new Intent(LoginActivity.this, StudentHomeActivity.class));
                     } else if ("teacher".equals(userType)) {
-                        Toast.makeText(LoginActivity.this, "Teacher", Toast.LENGTH_SHORT).show();
-                        //startActivity(new Intent(LoginActivity.this, TeacherHomeActivity.class));
+                        startActivity(new Intent(LoginActivity.this, TeacherHomeActivity.class));
                     }
                     finish();
                 } else {

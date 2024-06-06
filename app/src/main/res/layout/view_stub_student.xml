@@ -4,23 +4,39 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/et_grade"
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Grade"
+        android:textColor="@color/grey_60"
+        android:textSize="16sp"
+        android:paddingBottom="8dp" />
+
+    <Spinner
+        android:id="@+id/spinner_grade"
         android:layout_width="match_parent"
         android:layout_height="@dimen/spacing_xmlarge"
         android:background="@drawable/edit_text_round"
-        android:hint="Grade"
+        android:text="Grade"
         android:inputType="text"
         android:maxLines="1"
         android:singleLine="true"
         android:textColor="@color/grey_60"
         android:textColorHint="@color/grey_20" />
 
-    <EditText
-        android:id="@+id/et_class"
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:text="Select Class"
+        android:textColor="@color/grey_60"
+        android:textSize="16sp"
+        android:paddingBottom="8dp" />
+
+    <Spinner
+        android:id="@+id/spinner_class"
         android:layout_width="match_parent"
         android:layout_height="@dimen/spacing_xmlarge"
-        android:layout_marginTop="@dimen/spacing_large"
         android:background="@drawable/edit_text_round"
         android:hint="Class"
         android:inputType="text"

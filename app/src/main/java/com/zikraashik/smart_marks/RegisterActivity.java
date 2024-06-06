@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.ViewStub;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,7 +27,8 @@ import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText fNameEditText,lNameEditText, emailEditText, passwordEditText, retypePasswordEditText, gradeEditText, classEditText;
+    private EditText fNameEditText,lNameEditText, emailEditText, passwordEditText, retypePasswordEditText;
+    private Spinner gradeSpinner, classSpinner;
     private RadioGroup rgRole;
     private ViewStub viewStubStudent;
     private ProgressBar progressBar;
@@ -79,8 +82,19 @@ public class RegisterActivity extends AppCompatActivity {
                     userType = "student";
                     if (viewStubStudent.getParent() != null) {
                         viewStubStudent.inflate();
-                        gradeEditText = findViewById(R.id.et_grade);
-                        classEditText = findViewById(R.id.et_class);
+                        gradeSpinner = findViewById(R.id.spinner_grade);
+                        classSpinner = findViewById(R.id.spinner_class);
+
+                        // Populate the spinners
+                        ArrayAdapter<CharSequence> gradeAdapter = ArrayAdapter.createFromResource(RegisterActivity.this,
+                                R.array.grade_array, android.R.layout.simple_spinner_item);
+                        gradeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        gradeSpinner.setAdapter(gradeAdapter);
+
+                        ArrayAdapter<CharSequence> classAdapter = ArrayAdapter.createFromResource(RegisterActivity.this,
+                                R.array.class_array, android.R.layout.simple_spinner_item);
+                        classAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        classSpinner.setAdapter(classAdapter);
                     } else {
                         viewStubStudent.setVisibility(View.VISIBLE);
                     }
@@ -118,8 +132,8 @@ public class RegisterActivity extends AppCompatActivity {
         userdataMap.put("userType", userType);
 
         if (userType.equals("student")) {
-            String grade = gradeEditText.getText().toString();
-            String className = classEditText.getText().toString();
+            String grade = gradeSpinner.getSelectedItem().toString();
+            String className = classSpinner.getSelectedItem().toString();
 
             if (grade.isEmpty() || className.isEmpty()) {
                 Toast.makeText(RegisterActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
