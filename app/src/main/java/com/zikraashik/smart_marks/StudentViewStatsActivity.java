@@ -90,7 +90,7 @@ public class StudentViewStatsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedTerm = (String) parent.getItemAtPosition(position);
-                displayAllStudents();
+                //displayAllStudents();
             }
 
             @Override
