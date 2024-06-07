@@ -1,0 +1,88 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/spacing_middle"
+    android:padding="@dimen/spacing_xsmall">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/grey_60"
+            android:text="Student Name" />
+
+        <TextView
+            android:id="@+id/tv_student_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Name" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/grey_60"
+            android:text="Student Grade" />
+
+        <TextView
+            android:id="@+id/tv_student_grade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Name" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/grey_60"
+            android:text="Student Class" />
+
+        <TextView
+            android:id="@+id/tv_student_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Name" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/grey_60"
+            android:text="Student Total" />
+
+        <TextView
+            android:id="@+id/tv_student_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Name" />
+    </LinearLayout>
+
+</LinearLayout>

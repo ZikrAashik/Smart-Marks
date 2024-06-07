@@ -148,7 +148,7 @@ public class StudentReportViewActivity extends AppCompatActivity {
                     for (DataSnapshot subjectSnapshot : dataSnapshot.getChildren()) {
                         String subjectName = subjectSnapshot.getKey();
 
-                        if(subjectName.equals("teacherId"))
+                        if(subjectName.equals("teacherId") || subjectName.equals("grade_class") || subjectName.equals("totalMarks"))
                             continue;
 
                         String marks = subjectSnapshot.getValue(String.class);

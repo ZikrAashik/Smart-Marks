@@ -12,7 +12,10 @@
         android:theme="@style/Theme.SmartMarks"
         tools:targetApi="31">
         <activity
-            android:name=".StudentViewChartsActivity"
+            android:name=".TeacherViewStatsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentViewStatsActivity"
             android:exported="false" />
         <activity
             android:name=".StudentReportViewActivity"

@@ -36,6 +36,8 @@ public class AddMarksActivity extends AppCompatActivity {
     private List<Subject> subjectList;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private String grade_class;
+    private float totalMarks = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class AddMarksActivity extends AppCompatActivity {
                         String grade = snapshot.child("grade").getValue(String.class);
                         String className = snapshot.child("className").getValue(String.class);
 
+                        grade_class = grade +"_"+className;
                         String studentDetails = "Name: " + name + "\nGrade: " + grade + "\nClass: " + className;
                         tvStudentDetails.setText(studentDetails);
                         return;
@@ -120,6 +123,8 @@ public class AddMarksActivity extends AppCompatActivity {
             subject.setName(subjectName);
             subject.setMarks(subjectMarks);
 
+            totalMarks = totalMarks+Float.parseFloat(subjectMarks);
+
             marksData.put(subjectName, subjectMarks);
         }
 
@@ -128,6 +133,8 @@ public class AddMarksActivity extends AppCompatActivity {
         assert currentUser != null;
         String teacherId = currentUser.getUid();
         marksData.put("teacherId", teacherId);
+        marksData.put("grade_class", grade_class);
+        marksData.put("totalMarks", String.valueOf(totalMarks));
 
         // Get reference to the Firebase database
         DatabaseReference studentMarksRef = FirebaseDatabase.getInstance().getReference().child("StudentMarks").child(indexNo).child(term);
@@ -148,6 +155,7 @@ public class AddMarksActivity extends AppCompatActivity {
         tvStudentDetails.setText("Student Details");
         etTerm.getText().clear();
         subjectList.clear();
+        totalMarks = 0;
         subjectAdapter.notifyDataSetChanged();
     }
 

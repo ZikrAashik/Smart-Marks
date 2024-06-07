@@ -31,7 +31,7 @@ public class StudentHomeActivity extends AppCompatActivity {
         btnViewCharts = findViewById(R.id.btn_view_charts);
 
         btnViewReport.setOnClickListener(v -> startActivity(new Intent(StudentHomeActivity.this, StudentReportViewActivity.class)));
-        //btnViewCharts.setOnClickListener(v -> startActivity(new Intent(StudentHomeActivity.this, ViewChartsActivity.class)));
+        btnViewCharts.setOnClickListener(v -> startActivity(new Intent(StudentHomeActivity.this, StudentViewStatsActivity.class)));
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
