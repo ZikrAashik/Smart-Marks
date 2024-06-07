@@ -133,8 +133,8 @@
             android:layout_marginTop="@dimen/spacing_large"
             android:text="Clear"
             android:onClick="clearData"
-            android:background="@drawable/button_secondary_shape"
-            android:textColor="@android:color/black" />
+            android:background="@drawable/button_ternary_shape"
+            android:textColor="@android:color/white" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_back"

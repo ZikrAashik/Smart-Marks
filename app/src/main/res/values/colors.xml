@@ -8,6 +8,8 @@
     <color name="colorPrimaryLight">#A366FF</color>
     <color name="colorAccent">#3AFF8B</color>
     <color name="colorAccentLight">#70FFB7</color>
+    <color name="colorRed">#FF0057</color>
+    <color name="colorRedDark">#710027</color>
     <color name="colorOverlayPrimary">#7433E0</color>
 
     <color name="colorBackground">#f2f2f2</color>

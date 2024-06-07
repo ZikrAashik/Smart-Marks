@@ -90,7 +90,7 @@ public class StudentViewStatsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedTerm = (String) parent.getItemAtPosition(position);
-                displayTopThreeStudents();
+                displayAllStudents();
             }
 
             @Override
@@ -132,29 +132,29 @@ public class StudentViewStatsActivity extends AppCompatActivity {
         });
     }
 
-    private void displayTopThreeStudents() {
+    private void displayAllStudents() {
         DatabaseReference studentsRef = FirebaseDatabase.getInstance().getReference("StudentMarks");
 
         // Query based on the composite key
-        Query query = studentsRef.orderByChild("totalMarks").limitToLast(3);  // Query to get top 3 students with highest marks
+        Query query = studentsRef.orderByChild("grade_class").equalTo(grade + "_" + className);
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<DataSnapshot> topStudents = new ArrayList<>();
+                List<DataSnapshot> students = new ArrayList<>();
                 for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()) {
-                    topStudents.add(studentSnapshot);
+                    students.add(studentSnapshot);
                 }
 
-                Collections.reverse(topStudents);  // Because limitToLast returns in ascending order
+                Collections.reverse(students);  // Reverse to get the order as needed
 
                 llStudentContainer.removeAllViews();  // Clear any existing views
 
-                for (DataSnapshot studentSnapshot : topStudents) {
-                    String studentId = studentSnapshot.getKey();
+                for (DataSnapshot studentSnapshot : students) {
+                    String indexNo = studentSnapshot.getKey(); // Assuming indexNo is the key
                     int totalMarks = studentSnapshot.child("totalMarks").getValue(Integer.class);
 
-                    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(studentId);
+                    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(indexNo);
                     userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot userSnapshot) {
@@ -195,6 +195,7 @@ public class StudentViewStatsActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private int calculateTotalMarks(DataSnapshot termSnapshot) {
         int totalMarks = 0;
