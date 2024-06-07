@@ -12,6 +12,10 @@
     <color name="colorRedDark">#710027</color>
     <color name="colorOverlayPrimary">#7433E0</color>
 
+    <color name="color1">#07FF0B</color>
+    <color name="color2">#FF6600</color>
+    <color name="color3">#FFD400</color>
+
     <color name="colorBackground">#f2f2f2</color>
 
     <color name="grey_3">#f7f7f7</color>
