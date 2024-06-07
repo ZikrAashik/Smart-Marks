@@ -31,7 +31,7 @@
         android:clickable="true"
         android:padding="@dimen/spacing_large"
         app:srcCompat="@drawable/ic_clear"
-        app:tint="@color/colorPrimary"
+        app:tint="@color/colorRed"
         android:focusable="true" />
 
 </LinearLayout>

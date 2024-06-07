@@ -52,7 +52,7 @@
                 android:clickable="true"
                 android:onClick="openLoginActivity"
                 android:padding="@dimen/spacing_large"
-                app:tint="@color/colorPrimary"
+                app:tint="@color/colorRed"
                 app:srcCompat="@drawable/ic_clear"
                 android:focusable="true" />
 
